@@ -58,12 +58,12 @@ class SteamLogin {
 				if(isset($login->emailsteamid) && $login->emailauth_needed == true){
 					if($authcode == ''){
 						file_put_contents($this->config['datapath'].'/logindata.json', json_encode(array('steamid' => $login->emailsteamid)));
-						$this->error('Please enter AUTHCODE available in your e-mail inbox (domain: '.$login->emaildomain.').');
-					}else $this->error('You enter bad authcode!');
+						$this->error('Please run login() with AUTHCODE available in your e-mail inbox (domain: '.$login->emaildomain.').');
+					}else $this->error('Bad authcode!');
 				}else if($login->requires_twofactor == true){
 					if($twofactorcode == ''){
-						$this->error('Please enter twofactorcode (mobile auth).');
-					}else $this->error('You enter bad twofactorcode!');
+						$this->error('Please run login() with twofactorcode (mobile auth).');
+					}else $this->error('Bad twofactorcode!');
 				}
 			}else{
 				preg_match_all('#g_sessionID\\s\=\\s\"(.*?)\"\;#si', $this->view('http://steamcommunity.com/id'), $matches);
