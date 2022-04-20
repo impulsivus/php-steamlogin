@@ -1,7 +1,8 @@
 <?php
 defined('php-steamlogin') or die('null');
-require_once("lib/Math/BigInteger.php");
-require_once("lib/Crypt/RSA.php");
+require_once("vendor/autoload.php");
+use phpseclib\Math\BigInteger;
+use phpseclib\Crypt\RSA;
 
 class SteamLogin {
 	
@@ -33,8 +34,8 @@ class SteamLogin {
 		if($dologin->publickey_mod && $dologin->publickey_exp && $dologin->timestamp){
 			
 			$password = $this->config['password'];
-			$rsa = new Crypt_RSA();
-			$key = array('modulus' => new Math_BigInteger($dologin->publickey_mod, 16), 'publicExponent' => new Math_BigInteger($dologin->publickey_exp, 16));
+			$rsa = new RSA();
+			$key = array('modulus' => new BigInteger($dologin->publickey_mod, 16), 'publicExponent' => new BigInteger($dologin->publickey_exp, 16));
 			$rsa->loadKey($key, CRYPT_RSA_PUBLIC_FORMAT_RAW);
 			$rsa->setPublicKey($key);
 			$rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
